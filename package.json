@@ -1,0 +1,22 @@
+{
+  "name": "streaming-discord-widgets",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Sync YouTube, Twitch and Kick live statistics to three Discord profile widgets.",
+  "scripts": {
+    "start": "node src/streaming/all.js",
+    "start:youtube": "node src/streaming/youtube.js",
+    "start:twitch": "node src/streaming/twitch.js",
+    "start:kick": "node src/streaming/kick.js",
+    "start:streaming": "node src/streaming/all.js",
+    "start:all": "node src/streaming/all.js",
+    "dry-run:youtube": "node src/streaming/youtube.js --dry-run",
+    "dry-run:twitch": "node src/streaming/twitch.js --dry-run",
+    "dry-run:kick": "node src/streaming/kick.js --dry-run",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
