@@ -90,9 +90,9 @@ updated_at = Just now
 | `stream_title` | String | Current stream title |
 | `thumbnail` | Image | Stream preview image |
 | `game` | String | Current game or category |
+| `game_image` | Image | Current game or category image |
 | `followers` | Number | Total follower count |
 | `followers_compact` | String | Compact follower count, e.g. `12.5K` |
-| `game_image` | Image | Current game or category image |
 | `subscribers` | Number | Subscriber count when publicly available |
 | `subscribers_status` | String | Subscriber count or unavailable message |
 | `live_viewers` | Number | Current viewer count |
