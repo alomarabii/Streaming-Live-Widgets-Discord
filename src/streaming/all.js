@@ -43,3 +43,4 @@ function stop() {
 for (const service of services) start(service);
 process.on("SIGINT", stop);
 process.on("SIGTERM", stop);
+
