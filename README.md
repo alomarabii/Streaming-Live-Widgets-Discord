@@ -66,15 +66,18 @@ Live_Viewers
 | `live_viewers` | Number | Current live viewers |
 | `channel_url` | String | YouTube channel URL |
 | `stream_url` | String | Current stream URL |
-| `updated_at` | String | Last update date and time |
+| `updated_at` | String | Last update time (e.g., "Just now", "5 minutes ago") |
 
 Example:
 
 ```text
 channel_name = Mohammed
+description = Tech and gaming content creator
 status = LIVE
-subscribers_display = 25K subscribers
+stream_title = Gaming Session
+subscribers_display = 12.5K subscribers
 live_viewers = 430
+updated_at = Just now
 ```
 
 # Twitch fields
@@ -89,20 +92,26 @@ live_viewers = 430
 | `game` | String | Current game or category |
 | `followers` | Number | Total follower count |
 | `followers_compact` | String | Compact follower count, e.g. `12.5K` |
+| `game_image` | Image | Current game or category image |
 | `subscribers` | Number | Subscriber count when publicly available |
 | `subscribers_status` | String | Subscriber count or unavailable message |
 | `live_viewers` | Number | Current viewer count |
 | `uptime` | String | How long the stream has been running |
 | `channel_url` | String | Twitch channel URL |
-| `updated_at` | String | Last update date and time |
+| `updated_at` | String | Last update time (e.g., "Just now", "5 minutes ago") |
 
 Example:
 
 ```text
-followers = 12500
-followers_compact = 12.5K
+channel_name = streamername
+status = LIVE
+stream_title = Competitive Gaming
 game = Just Chatting
+followers_compact = 12.5K
+subscribers_status = Not publicly available
+live_viewers = 850
 uptime = 2 hours, 15 minutes
+updated_at = Just now
 ```
 
 # Kick fields
@@ -129,9 +138,26 @@ uptime = 2 hours, 15 minutes
 | `chat_mode` | String | Current chat mode |
 | `slow_mode` | String | Whether slow mode is enabled |
 | `channel_url` | String | Kick channel URL |
-| `updated_at` | String | Last update date and time |
+| `updated_at` | String | Last update time (e.g., "Just now", "5 minutes ago") |
 
 Kick may block some direct live requests with a `403` response. The app attempts to read Kick directly first; if this is blocked, it uses the Jina Reader proxy to read the public channel endpoint only. No bot token, Discord user ID, or other secrets are sent to the proxy.
+
+Example:
+
+```text
+channel_name = streamer
+verified = Verified
+status = LIVE
+stream_title = Broadcasting Live
+category = Just Chatting
+followers_compact = 8.5K
+subscribers_status = Not publicly available
+live_viewers = 320
+language = English
+chat_mode = Followers
+slow_mode = Disabled
+updated_at = Just now
+```
 
 # Unified settings file
 
@@ -212,6 +238,8 @@ TWITCH_DISCORD_APP_ID=
 TWITCH_DISCORD_USER_ID=
 TWITCH_DISCORD_BOT_TOKEN=
 TWITCH_DISCORD_WIDGET_USERNAME=Twitch Live
+IGDB_CLIENT_ID=
+IGDB_ACCESS_TOKEN=
 ```
 
 | Variable | Description |
@@ -220,6 +248,19 @@ TWITCH_DISCORD_WIDGET_USERNAME=Twitch Live
 | `TWITCH_DISCORD_USER_ID` | Discord account ID that will display the widget |
 | `TWITCH_DISCORD_BOT_TOKEN` | Twitch bot token |
 | `TWITCH_DISCORD_WIDGET_USERNAME` | Display name shown above the widget |
+| `IGDB_CLIENT_ID` | IGDB API Client ID (optional, for game images) |
+| `IGDB_ACCESS_TOKEN` | IGDB API Access Token (optional, for game images) |
+
+### Getting IGDB credentials
+
+To enable game images for Twitch:
+
+1. Visit https://www.igdb.com/api
+2. Sign up or log in
+3. Copy your `Client ID` and `Access Token`
+4. Add them to `.env.streaming`
+
+If IGDB credentials are not provided, the bot still works—only the game image field will be empty.
 
 ## Kick bot
 
@@ -405,15 +446,18 @@ Live_Viewers
 | `live_viewers` | Number | عدد مشاهدي البث الآن |
 | `channel_url` | String | رابط قناة YouTube |
 | `stream_url` | String | رابط البث الحالي |
-| `updated_at` | String | تاريخ ووقت آخر تحديث |
+| `updated_at` | String | وقت آخر تحديث (مثلاً "للتو"، "قبل 5 دقائق") |
 
 مثال:
 
 ```text
 channel_name = Mohammed
+description = منشئ تكنولوجيا وألعاب
 status = LIVE
-subscribers_display = 25K subscribers
+stream_title = Gaming Session
+subscribers_display = 12.5K subscribers
 live_viewers = 430
+updated_at = للتو
 ```
 
 # حقول Twitch
@@ -428,20 +472,26 @@ live_viewers = 430
 | `game` | String | اللعبة أو التصنيف الحالي |
 | `followers` | Number | عدد المتابعين الكامل |
 | `followers_compact` | String | عدد المتابعين مختصرًا، مثل `12.5K` |
+| `game_image` | Image | صورة اللعبة أو التصنيف الحالي |
 | `subscribers` | Number | عدد المشتركين عندما يكون متاحًا للعامة |
 | `subscribers_status` | String | عدد المشتركين أو رسالة عدم توفره |
 | `live_viewers` | Number | عدد المشاهدين الحالي |
 | `uptime` | String | المدة التي استمر فيها البث |
 | `channel_url` | String | رابط قناة Twitch |
-| `updated_at` | String | تاريخ ووقت آخر تحديث |
+| `updated_at` | String | وقت آخر تحديث (مثلاً "للتو"، "قبل 5 دقائق") |
 
 مثال:
 
 ```text
-followers = 12500
-followers_compact = 12.5K
+channel_name = streamername
+status = LIVE
+stream_title = Competitive Gaming
 game = Just Chatting
+followers_compact = 12.5K
+subscribers_status = Not publicly available
+live_viewers = 850
 uptime = 2 hours, 15 minutes
+updated_at = للتو
 ```
 
 # حقول Kick
@@ -468,11 +518,28 @@ uptime = 2 hours, 15 minutes
 | `chat_mode` | String | وضع الدردشة الحالي |
 | `slow_mode` | String | هل الوضع البطيء مفعل؟ |
 | `channel_url` | String | رابط قناة Kick |
-| `updated_at` | String | تاريخ ووقت آخر تحديث |
+| `updated_at` | String | وقت آخر تحديث (مثلاً "للتو"، "قبل 5 دقائق") |
 
 قد يحظر Kick بعض طلبات البرامج المباشرة برمز `403`. يحاول البرنامج قراءة Kick
 مباشرة أولًا، وإذا حدث هذا الحظر يستخدم وسيط Jina Reader لقراءة endpoint العام
 للقناة فقط. لا يُرسل Bot Token أو Discord User ID أو أي بيانات سرية إلى الوسيط.
+
+مثال:
+
+```text
+channel_name = streamer
+verified = Verified
+status = LIVE
+stream_title = Broadcasting Live
+category = Just Chatting
+followers_compact = 8.5K
+subscribers_status = Not publicly available
+live_viewers = 320
+language = English
+chat_mode = Followers
+slow_mode = Disabled
+updated_at = للتو
+```
 
 # ملف الإعداد الموحد
 
@@ -553,6 +620,8 @@ TWITCH_DISCORD_APP_ID=
 TWITCH_DISCORD_USER_ID=
 TWITCH_DISCORD_BOT_TOKEN=
 TWITCH_DISCORD_WIDGET_USERNAME=Twitch Live
+IGDB_CLIENT_ID=
+IGDB_ACCESS_TOKEN=
 ```
 
 | المتغير | الشرح |
@@ -561,6 +630,19 @@ TWITCH_DISCORD_WIDGET_USERNAME=Twitch Live
 | `TWITCH_DISCORD_USER_ID` | رقم حساب Discord الذي سيظهر عليه Widget |
 | `TWITCH_DISCORD_BOT_TOKEN` | توكن بوت Twitch |
 | `TWITCH_DISCORD_WIDGET_USERNAME` | الاسم الظاهر أعلى Widget |
+| `IGDB_CLIENT_ID` | معرّف IGDB API (اختياري، لصور الألعاب) |
+| `IGDB_ACCESS_TOKEN` | رمز IGDB API (اختياري، لصور الألعاب) |
+
+### الحصول على بيانات IGDB
+
+لتفعيل صور الألعاب في Twitch:
+
+1. اذهب إلى https://www.igdb.com/api
+2. سجل حساب جديد أو سجل دخول
+3. انسخ `Client ID` و `Access Token`
+4. ضعهما في `.env.streaming`
+
+إذا لم توفر بيانات IGDB، البوت يعمل بشكل طبيعي—فقط حقل صورة اللعبة سيكون فارغاً.
 
 ## بوت Kick
 

@@ -3,6 +3,7 @@ import {
   apiText,
   compactNumber,
   formatDuration,
+  formatRelativeTime,
   imageField,
   numberField,
   optional,
@@ -84,7 +85,7 @@ async function fetchSnapshot(config) {
       textField("chat_mode", channel.chatroom?.chat_mode || "—"),
       textField("slow_mode", channel.chatroom?.slow_mode ? "Enabled" : "Disabled"),
       textField("channel_url", `https://kick.com/${slug}`),
-      textField("updated_at", new Date().toISOString()),
+      textField("updated_at", formatRelativeTime()),
     ],
   };
 }

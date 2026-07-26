@@ -1,5 +1,6 @@
 import {
   apiText,
+  formatRelativeTime,
   imageField,
   numberField,
   optional,
@@ -102,7 +103,7 @@ async function fetchSnapshot(config) {
       numberField("live_viewers", live ? numeric(viewersText) : 0),
       textField("channel_url", url),
       textField("stream_url", videoId ? `https://youtube.com/watch?v=${videoId}` : "—"),
-      textField("updated_at", new Date().toISOString()),
+      textField("updated_at", formatRelativeTime()),
     ],
   };
 }

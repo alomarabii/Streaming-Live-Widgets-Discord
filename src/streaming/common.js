@@ -166,6 +166,44 @@ export function compactNumber(value) {
     .format(number);
 }
 
+export function formatRelativeTime() {
+  return "Just now";
+}
+
+export async function fetchGameImage(gameName, requestConfig) {
+  try {
+    const clientId = optional("IGDB_CLIENT_ID", "");
+    const accessToken = optional("IGDB_ACCESS_TOKEN", "");
+
+    // Return null if IGDB is not configured
+    if (!clientId || !accessToken) {
+      return null;
+    }
+
+    const response = await apiJson(
+      "https://api.igdb.com/v4/games",
+      {
+        method: "POST",
+        headers: {
+          "Client-ID": clientId,
+          "Authorization": `Bearer ${accessToken}`,
+        },
+        body: `search "${gameName}"; fields cover.url, name; limit 1;`,
+      },
+      requestConfig,
+    );
+
+    // IGDB returns cover URLs without protocol
+    if (Array.isArray(response) && response[0]?.cover?.url) {
+      return `https:${response[0].cover.url.replace("t_thumb", "t_cover_big")}`;
+    }
+    return null;
+  } catch {
+    // Silently fail - game image is optional
+    return null;
+  }
+}
+
 export function buildPayload(username, fields) {
   return {
     username,

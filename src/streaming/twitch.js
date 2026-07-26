@@ -1,6 +1,8 @@
 import {
   apiText,
   compactNumber,
+  fetchGameImage,
+  formatRelativeTime,
   imageField,
   numberField,
   optional,
@@ -46,6 +48,7 @@ async function fetchSnapshot(config) {
   const live = !/offline/i.test(uptime);
   const followers = numeric(followersText);
   const subscribers = numeric(subscribersText);
+  const gameImage = game ? await fetchGameImage(game, config) : null;
 
   return {
     live,
@@ -60,6 +63,7 @@ async function fetchSnapshot(config) {
           ? `https://static-cdn.jtvnw.net/previews-ttv/live_user_${login}-1280x720.jpg`
           : null,
       ),
+      imageField("game_image", gameImage),
       textField("game", game || "—"),
       numberField("followers", followers),
       textField("followers_compact", compactNumber(followers)),
@@ -71,7 +75,7 @@ async function fetchSnapshot(config) {
       numberField("live_viewers", live ? numeric(viewersText) : 0),
       textField("uptime", live ? uptime : "—"),
       textField("channel_url", `https://twitch.tv/${login}`),
-      textField("updated_at", new Date().toISOString()),
+      textField("updated_at", formatRelativeTime()),
     ],
   };
 }
