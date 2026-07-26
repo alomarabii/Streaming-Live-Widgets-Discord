@@ -686,4 +686,5 @@ Ctrl+C
 - لا تضع التوكنات داخل ملفات JavaScript.
 - لا ترفع `.env.streaming` إلى GitHub.
 - استخدم Reset Token فورًا إذا ظهر أي توكن في مكان عام.
-- استخدم Bot Token مختلفًا لكل Discord Application.
+- استخدم لكل Discord Application.
+- 
