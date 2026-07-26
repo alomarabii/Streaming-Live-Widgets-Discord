@@ -147,3 +147,4 @@ export async function runService({ platform, prefix, envFile, fetchSnapshot }) {
   await sync();
   if (!once) setInterval(sync, intervalSeconds * 1000);
 }
+
