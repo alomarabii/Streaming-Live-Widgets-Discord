@@ -29,3 +29,4 @@ export async function updateDiscordWidget(config, body) {
   return text ? JSON.parse(text) : null;
 }
 
+
